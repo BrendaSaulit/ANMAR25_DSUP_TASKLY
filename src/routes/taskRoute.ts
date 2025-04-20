@@ -5,6 +5,8 @@ import { TaskController } from '../controllers/TaskController';
 const router = Router();
 
 
-router.post('/tasks', ValidationMiddleware.validateTask, TaskController.createTask);
+router.post('/tasks', ValidationMiddleware.validateTask, TaskController.create);
+
+
 
 export default router;
