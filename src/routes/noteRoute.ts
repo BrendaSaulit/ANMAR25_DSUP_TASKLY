@@ -3,6 +3,6 @@ import { NoteController } from '../controllers/NoteController';
 
 const router = Router();
 
-router.post('/notes', NoteController.createNote);
+router.post('/tasks/:taskId/notes', NoteController.create);
 
 export default router;
