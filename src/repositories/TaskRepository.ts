@@ -20,7 +20,10 @@ export class TaskRepository {
         where: {id}
     });
   }  
-
+  
+  static async findById(id: number) {
+    return await prisma.task.findUnique({ where: { id } });
+  }
 }
 
 
