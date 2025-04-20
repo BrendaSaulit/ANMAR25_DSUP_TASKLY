@@ -7,4 +7,3 @@ export const TaskSchema = z.object({
   status: z.enum(['TODO', 'IN_PROGRESS', 'DONE']),
 })
 
-export const TaskUpdateSchema = TaskSchema.partial()
