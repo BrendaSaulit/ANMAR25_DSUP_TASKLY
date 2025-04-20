@@ -4,5 +4,6 @@ import { NoteController } from '../controllers/NoteController';
 const router = Router();
 
 router.post('/tasks/:taskId/notes', NoteController.create);
+router.delete('/notes/:id', NoteController.delete)
 
 export default router;
