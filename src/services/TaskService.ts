@@ -29,7 +29,7 @@ export class TaskService {
       ]);
 
       const totalPages = Math.ceil(count / limit);
-      
+
       if (count === 0) {
         return {
           count: 0,
@@ -45,5 +45,17 @@ export class TaskService {
         pages: totalPages,
         data: allTasks,
       };
+    }
+
+    static async getById(id: number){
+      const task = await TaskRepository.findById(id);
+
+        if (!task) {
+          throw new Error('Task not found');
+        }
+        
+      return {
+        data: task
+      }
     }
   }
