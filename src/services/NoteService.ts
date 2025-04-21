@@ -54,4 +54,16 @@ export class NoteService {
         data: allNotes,
       };
     }
+
+     static async update(id: number, data: any){
+            const updatedNote = await NoteRepository.update(id, data);
+      
+              if (!updatedNote) {
+                throw new Error('Note not found');
+              }
+              
+            return {
+              data: updatedNote
+            }
+          }
 }
