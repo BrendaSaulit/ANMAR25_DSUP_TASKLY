@@ -76,4 +76,20 @@ export class TaskController {
       res.status(500).json({ error: error.message });
     }
   }
+
+  static async getByCategory(req: Request, res: Response) {
+    const category = req.params.category.toUpperCase();
+    const { page = "1", limit = "5" } = req.query;
+
+    try {
+      const result = await TaskService.getByCategory(
+        category,
+        Number(page),
+        Number(limit),
+      );
+      res.status(200).json(result);
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 }
