@@ -141,4 +141,40 @@ export class TaskRepository {
       data,
     });
   }
+
+  static async findByCategory(category: string, skip: number, limit: number) {
+    const validCategories: string[] = ["WORK", "STUDY","PERSONAL","OTHER",];
+
+    if (!validCategories.includes(category.toUpperCase())) {
+      throw new Error("Invalid category");
+    }
+
+    return await prisma.task.findMany({
+      where: {
+        category: category.toUpperCase() as "WORK" | "STUDY" | "PERSONAL" | "OTHER",
+      },
+      skip,
+      take: limit,
+      orderBy: {
+        created_at: "desc",
+      },
+      include: {
+        notes: true,
+      },
+    });
+  }
+
+  static async countByCategory(category: string) {
+    const validCategories: string[] =  ["WORK", "STUDY","PERSONAL","OTHER",];
+
+    if (!validCategories.includes(category.toUpperCase())) {
+      throw new Error("Invalid category");
+    }
+
+    return await prisma.task.count({
+      where: {
+        category: category.toUpperCase() as  "WORK" | "STUDY" | "PERSONAL" | "OTHER",
+      },
+    });
+  }
 }
