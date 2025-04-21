@@ -91,4 +91,22 @@ export class TaskService {
       data: updatedTask,
     };
   }
+
+  static async getByCategory(category: string, page: number, limit: number) {
+    const skip = (page - 1) * limit;
+
+    const [tasks, count] = await Promise.all([
+      TaskRepository.findByCategory(category, skip, limit),
+      TaskRepository.countByCategory(category),
+    ]);
+
+    const totalPages = Math.ceil(count / limit);
+
+    return {
+      count,
+      page,
+      pages: totalPages,
+      data: tasks,
+    };
+  }
 }
