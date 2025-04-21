@@ -83,6 +83,12 @@ export class TaskRepository {
       },
     });
   }
-  
+
+  static async update(id: number, data: any) {
+    return await prisma.task.update({
+      where: { id }, 
+      data,
+  })
+}
   
 }
