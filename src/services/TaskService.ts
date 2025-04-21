@@ -1,12 +1,15 @@
-import { TaskRepository } from '../repositories/TaskRepository';
-import { Category } from '../enums/TaskCategory';
-import { Priority } from '../enums/TaskPriority';
-import { Status } from '../enums/TaskStatus';
-
-
+import { TaskRepository } from "../repositories/TaskRepository";
+import { Category } from "../enums/TaskCategory";
+import { Priority } from "../enums/TaskPriority";
+import { Status } from "../enums/TaskStatus";
 
 export class TaskService {
-  static async create(data: { title: string; priority: Priority; category: Category; status: Status }) {
+  static async create(data: {
+    title: string;
+    priority: Priority;
+    category: Category;
+    status: Status;
+  }) {
     return await TaskRepository.create(data);
   }
 
@@ -14,7 +17,7 @@ export class TaskService {
     const task = await TaskRepository.findById(id);
 
     if (!task) {
-      throw new Error('Task not found');
+      throw new Error("Task not found");
     }
 
     return await TaskRepository.delete(id);
@@ -24,70 +27,68 @@ export class TaskService {
     const skip = (page - 1) * limit;
 
     const [allTasks, count] = await Promise.all([
-        TaskRepository.findAll(skip, limit, query),
-        TaskRepository.countAll(query),
-      ]);
+      TaskRepository.findAll(skip, limit, query),
+      TaskRepository.countAll(query),
+    ]);
 
-      const totalPages = Math.ceil(count / limit);
+    const totalPages = Math.ceil(count / limit);
 
-      if (count === 0) {
-        return {
-          count: 0,
-          page,
-          pages: 0,
-          data: [],
-        };
-      }
-    
+    if (count === 0) {
       return {
-        count,
+        count: 0,
         page,
-        pages: totalPages,
-        data: allTasks,
+        pages: 0,
+        data: [],
       };
     }
 
-    static async getById(id: number){
-      const task = await TaskRepository.findById(id);
+    return {
+      count,
+      page,
+      pages: totalPages,
+      data: allTasks,
+    };
+  }
 
-        if (!task) {
-          throw new Error('Task not found');
-        }
-        
-      return {
-        data: task
-      }
+  static async getById(id: number) {
+    const task = await TaskRepository.findById(id);
+
+    if (!task) {
+      throw new Error("Task not found");
     }
 
-    static async getByStatus(status: string, page: number, limit: number) {
-        const skip = (page - 1) * limit;
-      
-        const [tasks, count] = await Promise.all([
-          TaskRepository.findByStatus(status, skip, limit),
-          TaskRepository.countByStatus(status)
-        ]);
-      
-        const totalPages = Math.ceil(count / limit);
-      
-        return {
-          count,
-          page,
-          pages: totalPages,
-          data: tasks
-        };
-      }
-
-      static async update(id: number, data: any){
-        const updatedTask = await TaskRepository.update(id, data);
-  
-          if (!updatedTask) {
-            throw new Error('Task not found');
-          }
-          
-        return {
-          data: updatedTask
-        }
-      }
-      
-      
+    return {
+      data: task,
+    };
   }
+
+  static async getByStatus(status: string, page: number, limit: number) {
+    const skip = (page - 1) * limit;
+
+    const [tasks, count] = await Promise.all([
+      TaskRepository.findByStatus(status, skip, limit),
+      TaskRepository.countByStatus(status),
+    ]);
+
+    const totalPages = Math.ceil(count / limit);
+
+    return {
+      count,
+      page,
+      pages: totalPages,
+      data: tasks,
+    };
+  }
+
+  static async update(id: number, data: any) {
+    const updatedTask = await TaskRepository.update(id, data);
+
+    if (!updatedTask) {
+      throw new Error("Task not found");
+    }
+
+    return {
+      data: updatedTask,
+    };
+  }
+}
