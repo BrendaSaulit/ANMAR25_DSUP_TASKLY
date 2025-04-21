@@ -31,4 +31,21 @@ export class NoteController {
             res.status(500).json({ error: error.message });
           }
       }
+
+      static async getAll(req: Request, res: Response) {
+          const taskId = Number(req.params.taskId);
+          const { page = '1', limit = '5' } = req.query;
+      
+          try {
+              const notes = await NoteService.getAll(
+                taskId,
+                Number(page),
+                Number(limit)
+              );
+          
+              res.status(200).json(notes);
+            } catch (error: any) {
+              res.status(500).json({ error: error.message });
+            }
+        }
 }

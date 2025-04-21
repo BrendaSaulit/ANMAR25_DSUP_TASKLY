@@ -20,4 +20,26 @@ export class NoteRepository {
          where: { id } 
         });
   }
+
+  static async findAll(taskId: number, skip: number, limit: number){
+
+    return await prisma.note.findMany({
+     where: {
+        task_id: taskId
+      },
+     skip,
+     take: limit,
+     orderBy: {
+       created_at: 'desc',
+     },
+    });
+   }
+ 
+   static async countAll(taskId: number) {
+     return await prisma.note.count({
+        where: {
+            task_id: taskId
+          }
+     });
+   }
 }

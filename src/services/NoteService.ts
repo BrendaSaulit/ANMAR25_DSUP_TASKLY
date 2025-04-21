@@ -26,4 +26,32 @@ export class NoteService {
             data: note
           }
         }
+
+
+  static async getAll(taskId:number, page: number, limit: number) {
+    const skip = (page - 1) * limit;
+
+    const [allNotes, count] = await Promise.all([
+        NoteRepository.findAll(taskId, skip, limit),
+        NoteRepository.countAll(taskId),
+      ]);
+
+      const totalPages = Math.ceil(count / limit);
+
+      if (count === 0) {
+        return {
+          count: 0,
+          page,
+          pages: 0,
+          data: [],
+        };
+      }
+    
+      return {
+        count,
+        page,
+        pages: totalPages,
+        data: allNotes,
+      };
+    }
 }
