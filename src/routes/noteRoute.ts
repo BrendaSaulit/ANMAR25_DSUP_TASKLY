@@ -5,5 +5,6 @@ const router = Router();
 
 router.post('/tasks/:taskId/notes', NoteController.create);
 router.delete('/notes/:id', NoteController.delete)
+router.get('/notes/:id', NoteController.getById)
 
 export default router;
