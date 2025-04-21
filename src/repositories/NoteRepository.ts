@@ -42,4 +42,11 @@ export class NoteRepository {
           }
      });
    }
+
+   static async update(id: number, data: any) {
+    return await prisma.note.update({
+      where: { id }, 
+      data,
+  })
+}
 }
