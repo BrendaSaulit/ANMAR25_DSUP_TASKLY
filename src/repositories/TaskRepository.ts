@@ -22,7 +22,12 @@ export class TaskRepository {
   }  
 
   static async findById(id: number) {
-    return await prisma.task.findUnique({ where: { id } });
+    return await prisma.task.findUnique({
+      where: { id }, 
+      include: {
+        notes: true,
+      }
+    });
   }
 
   static async findAll(skip: number, limit: number){
