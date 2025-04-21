@@ -13,10 +13,25 @@ export class TaskController {
 
     try {
       await TaskService.delete(id);
-      res.status(204).send(); // 204 = No Content
+      res.status(204).send();
     } catch (error: any) {
       res.status(404).json({ error: error.message });
     }
+  }
+
+  static async get(req: Request, res: Response) {
+    const { page = '1', limit = '5' } = req.query;
+
+    try {
+        const tasks = await TaskService.getAll(
+          Number(page),
+          Number(limit)
+        );
+    
+        res.status(200).json(tasks);
+      } catch (error: any) {
+        res.status(500).json({ error: error.message });
+      }
   }
 
 }
