@@ -44,4 +44,21 @@ export class TaskController {
         res.status(500).json({ error: error.message });
       }
   }
+
+  static async getByStatus(req: Request, res: Response) {
+    const status = req.params.status.toUpperCase();
+    const { page = '1', limit = '5' } = req.query;
+
+  try {
+    const result = await TaskService.getByStatus(
+      status,
+      Number(page),
+      Number(limit)
+    );
+    res.status(200).json(result);
+  } catch (error: any) {
+    res.status(400).json({ error: error.message });
+   }
+  }
+  
 }
