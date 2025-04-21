@@ -76,6 +76,18 @@ export class TaskService {
           data: tasks
         };
       }
+
+      static async update(id: number, data: any){
+        const updatedTask = await TaskRepository.update(id, data);
+  
+          if (!updatedTask) {
+            throw new Error('Task not found');
+          }
+          
+        return {
+          data: updatedTask
+        }
+      }
       
       
   }
