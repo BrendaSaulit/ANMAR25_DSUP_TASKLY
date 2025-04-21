@@ -47,7 +47,7 @@ model Note{
   id Int @id @default(autoincrement())
   note String
   task_id Int
-  taskRef Task @relation(fields: [task_id], references: [id])
+  task Task @relation(fields: [task_id], references: [id])
   created_at DateTime @default(now())
   update_at DateTime @updatedAt
 }
