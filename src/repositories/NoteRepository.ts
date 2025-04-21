@@ -16,6 +16,8 @@ export class NoteRepository {
   }  
 
   static async findById(id: number) {
-    return await prisma.note.findUnique({ where: { id } });
+    return await prisma.note.findUnique({
+         where: { id } 
+        });
   }
 }
