@@ -48,4 +48,16 @@ export class NoteController {
               res.status(500).json({ error: error.message });
             }
         }
+
+         static async update(req: Request, res: Response){
+            const id = Number(req.params.id);
+            const data = req.body;
+        
+            try {
+                const note = await NoteService.update(id, data);
+                res.status(200).json(note);
+              } catch (error: any) {
+                res.status(500).json({ error: error.message });
+              }
+            }
 }
