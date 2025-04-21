@@ -38,4 +38,8 @@ export class TaskRepository {
     },
    });
   }
+
+  static async countAll() {
+    return await prisma.task.count();
+  }
 }
