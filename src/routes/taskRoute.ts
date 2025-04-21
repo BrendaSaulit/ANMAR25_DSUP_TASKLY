@@ -10,5 +10,6 @@ router.get("/tasks", TaskController.get);
 router.get("/tasks/:id", TaskController.getById);
 router.get("/tasks/status/:status", TaskController.getByStatus);
 router.put("/tasks/:id", TaskController.update);
+router.get("/tasks/category/:category", TaskController.getByCategory);
 
 export default router;
