@@ -47,4 +47,42 @@ export class TaskRepository {
   static async countAll() {
     return await prisma.task.count();
   }
+
+  static async findByStatus(status: string, skip: number, limit: number) {
+    const validStatuses: string[] = ['TODO', 'IN_PROGRESS', 'DONE'];
+
+    if (!validStatuses.includes(status.toUpperCase())) {
+      throw new Error('Invalid status');
+    }
+  
+    return await prisma.task.findMany({
+      where: {
+        status: status.toUpperCase() as 'TODO' | 'IN_PROGRESS' | 'DONE', 
+      },
+      skip,
+      take: limit,
+      orderBy: {
+        created_at: 'desc',
+      },
+      include: {
+        notes: true,
+      },
+    });
+  }
+  
+  static async countByStatus(status: string) {
+    const validStatuses: string[] = ['TODO', 'IN_PROGRESS', 'DONE']; 
+  
+    if (!validStatuses.includes(status.toUpperCase())) {
+      throw new Error('Invalid status');
+    }
+  
+    return await prisma.task.count({
+      where: {
+        status: status.toUpperCase() as 'TODO' | 'IN_PROGRESS' | 'DONE',
+      },
+    });
+  }
+  
+  
 }
