@@ -20,10 +20,22 @@ export class TaskRepository {
         where: {id}
     });
   }  
-  
+
   static async findById(id: number) {
     return await prisma.task.findUnique({ where: { id } });
   }
+
+  static async findAll(skip: number, limit: number){
+
+   return await prisma.task.findMany({
+    skip,
+    take: limit,
+    include: {
+      notes: true,
+    },
+    orderBy: {
+      created_at: 'desc',
+    },
+   });
+  }
 }
-
-
