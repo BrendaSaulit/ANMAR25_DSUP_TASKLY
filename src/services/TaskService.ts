@@ -58,4 +58,24 @@ export class TaskService {
         data: task
       }
     }
+
+    static async getByStatus(status: string, page: number, limit: number) {
+        const skip = (page - 1) * limit;
+      
+        const [tasks, count] = await Promise.all([
+          TaskRepository.findByStatus(status, skip, limit),
+          TaskRepository.countByStatus(status)
+        ]);
+      
+        const totalPages = Math.ceil(count / limit);
+      
+        return {
+          count,
+          page,
+          pages: totalPages,
+          data: tasks
+        };
+      }
+      
+      
   }
