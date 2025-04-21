@@ -34,4 +34,14 @@ export class TaskController {
       }
   }
 
+  static async getById(req: Request, res: Response){
+    const id = Number(req.params.id);
+
+    try {
+        const tasks = await TaskService.getById(id);
+        res.status(200).json(tasks);
+      } catch (error: any) {
+        res.status(500).json({ error: error.message });
+      }
+  }
 }
