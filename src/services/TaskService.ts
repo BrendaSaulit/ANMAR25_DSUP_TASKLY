@@ -20,12 +20,12 @@ export class TaskService {
     return await TaskRepository.delete(id);
   }
 
-  static async getAll(page: number, limit: number) {
+  static async getAll(page: number, limit: number, query?: string) {
     const skip = (page - 1) * limit;
 
     const [allTasks, count] = await Promise.all([
-        TaskRepository.findAll(skip, limit),
-        TaskRepository.countAll(),
+        TaskRepository.findAll(skip, limit, query),
+        TaskRepository.countAll(query),
       ]);
 
       const totalPages = Math.ceil(count / limit);

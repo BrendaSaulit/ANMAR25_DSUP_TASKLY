@@ -30,9 +30,30 @@ export class TaskRepository {
     });
   }
 
-  static async findAll(skip: number, limit: number){
+  static async findAll(skip: number, limit: number, query?: string){
+    const whereCondition = query
+    ? {
+        OR: [
+          {
+            title: {
+              contains: query,
+            },
+          },
+          {
+            notes: {
+              some: {
+                note: {
+                  contains: query,
+                },
+              },
+            },
+          },
+        ],
+      }
+    : {};
 
    return await prisma.task.findMany({
+    where: whereCondition,
     skip,
     take: limit,
     include: {
@@ -44,8 +65,33 @@ export class TaskRepository {
    });
   }
 
-  static async countAll() {
-    return await prisma.task.count();
+  static async countAll(query?: string) {
+    const whereCondition = query? {
+        OR: [
+          {
+            title: {
+              contains: query,
+            },
+          },
+          {
+            notes: {
+              some: {
+                note: {
+                  contains: query,
+                },
+              },
+            },
+          },
+        ],  
+      }
+    : {};
+    
+    const tasks = await prisma.task.findMany({
+        where: whereCondition,
+        select: { id: true },
+      });
+    
+      return tasks.length;
   }
 
   static async findByStatus(status: string, skip: number, limit: number) {

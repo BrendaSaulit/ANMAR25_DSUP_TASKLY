@@ -4,9 +4,12 @@ import { TaskService } from '../services/TaskService';
 export class TaskController {
   static async create(req: Request, res: Response) {
     const task = await TaskService.create(req.body);
+    try{
     res.status(201).json(task);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
   }
-
+  }
 
   static async delete(req: Request, res: Response) {
     const id = Number(req.params.id);
@@ -20,12 +23,13 @@ export class TaskController {
   }
 
   static async get(req: Request, res: Response) {
-    const { page = '1', limit = '5' } = req.query;
+    const { page = '1', limit = '5', query } = req.query;
 
     try {
         const tasks = await TaskService.getAll(
           Number(page),
-          Number(limit)
+          Number(limit),
+          query ? String(query) : undefined
         );
     
         res.status(200).json(tasks);
