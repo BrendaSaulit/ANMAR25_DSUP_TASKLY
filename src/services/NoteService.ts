@@ -14,4 +14,16 @@ export class NoteService {
   
       return await NoteRepository.delete(id);
     }
+
+        static async getById(id: number){
+          const note = await NoteRepository.findById(id);
+    
+            if (!note) {
+              throw new Error('Note not found');
+            }
+            
+          return {
+            data: note
+          }
+        }
 }
