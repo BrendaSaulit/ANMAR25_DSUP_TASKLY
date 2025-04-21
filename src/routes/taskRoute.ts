@@ -8,6 +8,9 @@ const router = Router();
 router.post('/tasks', ValidationMiddleware.validateTask, TaskController.create);
 router.delete('/tasks/:id', TaskController.delete);
 router.get('/tasks', TaskController.get);
+router.get('/tasks/:id', TaskController.getById);
+
+
 
 
 export default router;
