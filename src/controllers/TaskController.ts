@@ -60,5 +60,17 @@ export class TaskController {
     res.status(400).json({ error: error.message });
    }
   }
+
+  static async update(req: Request, res: Response){
+    const id = Number(req.params.id);
+    const data = req.body;
+
+    try {
+        const task = await TaskService.update(id, data);
+        res.status(200).json(task);
+      } catch (error: any) {
+        res.status(500).json({ error: error.message });
+      }
+    }
   
 }
