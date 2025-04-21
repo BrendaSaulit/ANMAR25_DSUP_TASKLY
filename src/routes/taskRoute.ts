@@ -7,6 +7,7 @@ const router = Router();
 
 router.post('/tasks', ValidationMiddleware.validateTask, TaskController.create);
 router.delete('/tasks/:id', TaskController.delete);
+router.get('/tasks', TaskController.get);
 
 
 export default router;
