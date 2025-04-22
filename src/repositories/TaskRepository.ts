@@ -100,7 +100,6 @@ export class TaskRepository {
   }
 
   static async findByStatus(status: string, skip: number, limit: number) {
-  
     return await prisma.task.findMany({
       where: {
         status: status.toUpperCase() as "TODO" | "IN_PROGRESS" | "DONE",
@@ -117,7 +116,6 @@ export class TaskRepository {
   }
 
   static async countByStatus(status: string) {
-
     return await prisma.task.count({
       where: {
         status: status.toUpperCase() as "TODO" | "IN_PROGRESS" | "DONE",
@@ -133,10 +131,13 @@ export class TaskRepository {
   }
 
   static async findByCategory(category: string, skip: number, limit: number) {
-
     return await prisma.task.findMany({
       where: {
-        category: category.toUpperCase() as "WORK" | "STUDY" | "PERSONAL" | "OTHER",
+        category: category.toUpperCase() as
+          | "WORK"
+          | "STUDY"
+          | "PERSONAL"
+          | "OTHER",
       },
       skip,
       take: limit,
@@ -150,10 +151,13 @@ export class TaskRepository {
   }
 
   static async countByCategory(category: string) {
-    
     return await prisma.task.count({
       where: {
-        category: category.toUpperCase() as  "WORK" | "STUDY" | "PERSONAL" | "OTHER",
+        category: category.toUpperCase() as
+          | "WORK"
+          | "STUDY"
+          | "PERSONAL"
+          | "OTHER",
       },
     });
   }

@@ -55,7 +55,7 @@ export class NoteService {
   }
 
   static async update(id: number, data: any) {
-    const note = await NoteRepository.findById(id)
+    const note = await NoteRepository.findById(id);
 
     if (!note) {
       throw new Error("Note not found");

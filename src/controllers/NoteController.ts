@@ -5,15 +5,18 @@ export class NoteController {
   static async create(req: Request, res: Response) {
     const { taskId } = req.params;
     const { note } = req.body;
-    try{
-    const newNote = await NoteService.create({ note, task_id: Number(taskId) });
-    res.status(201).json(newNote);
-    return;
-    }catch (error: any) {
+    try {
+      const newNote = await NoteService.create({
+        note,
+        task_id: Number(taskId),
+      });
+      res.status(201).json(newNote);
+      return;
+    } catch (error: any) {
       res.status(500).json({
         errors: ["an internal server error occurred"],
-       });
-      return 
+      });
+      return;
     }
   }
 
@@ -25,14 +28,14 @@ export class NoteController {
       res.status(204).json();
       return;
     } catch (error: any) {
-      if(error.message === "Note not found"){ 
-     res.status(404).json({ error: error.message });
-     return;
-    }
-    res.status(500).json({
-      errors: ["an internal server error occurred"],
-     });
-     return;
+      if (error.message === "Note not found") {
+        res.status(404).json({ error: error.message });
+        return;
+      }
+      res.status(500).json({
+        errors: ["an internal server error occurred"],
+      });
+      return;
     }
   }
 
@@ -44,14 +47,14 @@ export class NoteController {
       res.status(200).json(note);
       return;
     } catch (error: any) {
-      if(error.message === "Note not found"){ 
-     res.status(404).json({ error: error.message });
-     return;
-    }
-    res.status(500).json({
-      errors: ["an internal server error occurred"],
-     });
-     return;
+      if (error.message === "Note not found") {
+        res.status(404).json({ error: error.message });
+        return;
+      }
+      res.status(500).json({
+        errors: ["an internal server error occurred"],
+      });
+      return;
     }
   }
 
@@ -69,13 +72,12 @@ export class NoteController {
       res.status(200).json(notes);
       return;
     } catch (error: any) {
-     res.status(500).json({
-      errors: ["an internal server error occurred"],
-     });
-   return;
-   }
-}
-
+      res.status(500).json({
+        errors: ["an internal server error occurred"],
+      });
+      return;
+    }
+  }
 
   static async update(req: Request, res: Response) {
     const id = Number(req.params.id);
@@ -86,14 +88,14 @@ export class NoteController {
       res.status(200).json(note);
       return;
     } catch (error: any) {
-      if(error.message === "Note not found"){ 
-     res.status(404).json({ error: error.message });
-     return;
-    }
-    res.status(500).json({
-      errors: ["an internal server error occurred"],
-     });
-     return;
+      if (error.message === "Note not found") {
+        res.status(404).json({ error: error.message });
+        return;
+      }
+      res.status(500).json({
+        errors: ["an internal server error occurred"],
+      });
+      return;
     }
   }
 }

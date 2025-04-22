@@ -87,7 +87,7 @@ export class TaskService {
   }
 
   static async update(id: number, data: any) {
-    const task = await TaskRepository.findById(id)
+    const task = await TaskRepository.findById(id);
 
     if (!task) {
       throw new Error("Task not found");
@@ -122,5 +122,4 @@ export class TaskService {
       data: tasks,
     };
   }
-
 }
