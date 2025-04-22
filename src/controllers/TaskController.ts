@@ -3,11 +3,15 @@ import { TaskService } from "../services/TaskService";
 
 export class TaskController {
   static async create(req: Request, res: Response) {
-    const task = await TaskService.create(req.body);
     try {
-      res.status(201).json(task);
+      const task = await TaskService.create(req.body);
+       res.status(201).json(task);
+       return;
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({
+        errors: ["an internal server error occurred"],
+       });
+      return 
     }
   }
 
@@ -16,9 +20,17 @@ export class TaskController {
 
     try {
       await TaskService.delete(id);
-      res.status(204).send();
+       res.status(204).send();
+       return;
     } catch (error: any) {
-      res.status(404).json({ error: error.message });
+      if(error.message === "Task not found"){ 
+     res.status(404).json({ error: error.message });
+     return;
+    }
+    res.status(500).json({
+      errors: ["an internal server error occurred"],
+     });
+     return;
     }
   }
 
@@ -33,8 +45,12 @@ export class TaskController {
       );
 
       res.status(200).json(tasks);
+      return;
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({
+        errors: ["an internal server error occurred"],
+       });
+       return;
     }
   }
 
@@ -44,8 +60,16 @@ export class TaskController {
     try {
       const tasks = await TaskService.getById(id);
       res.status(200).json(tasks);
+      return;
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      if(error.message === "Task not found"){ 
+     res.status(404).json({ error: error.message });
+     return;
+    }
+    res.status(500).json({
+      errors: ["an internal server error occurred"],
+     });
+     return;
     }
   }
 
@@ -60,10 +84,18 @@ export class TaskController {
         Number(limit),
       );
       res.status(200).json(result);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
+      return;
+    }catch (error: any) {
+      if(error.message === "Invalid status"){ 
+     res.status(400).json({ error: error.message });
+     return;
+      }
+      res.status(500).json({
+        errors: ["an internal server error occurred"],
+       });
+       return;
   }
+}
 
   static async update(req: Request, res: Response) {
     const id = Number(req.params.id);
@@ -72,8 +104,16 @@ export class TaskController {
     try {
       const task = await TaskService.update(id, data);
       res.status(200).json(task);
+      return;
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      if(error.message === "Task not found"){ 
+     res.status(404).json({ error: error.message });
+     return;
+    }
+    res.status(500).json({
+      errors: ["an internal server error occurred"],
+     });
+     return;
     }
   }
 
@@ -88,8 +128,16 @@ export class TaskController {
         Number(limit),
       );
       res.status(200).json(result);
+      return
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      if(error.message === "Invalid category"){ 
+     res.status(400).json({ error: error.message });
+     return;
+      }
+      res.status(500).json({
+        errors: ["an internal server error occurred"],
+       });
+       return;
     }
   }
 }
