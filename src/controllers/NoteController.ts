@@ -22,7 +22,7 @@ export class NoteController {
 
     try {
       await NoteService.delete(id);
-      res.status(204).send();
+      res.status(204).json();
       return;
     } catch (error: any) {
       if(error.message === "Note not found"){ 

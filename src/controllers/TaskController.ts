@@ -20,7 +20,7 @@ export class TaskController {
 
     try {
       await TaskService.delete(id);
-       res.status(204).send();
+      res.status(204).json()
        return;
     } catch (error: any) {
       if(error.message === "Task not found"){ 
