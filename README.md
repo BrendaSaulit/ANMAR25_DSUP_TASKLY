@@ -5,16 +5,14 @@ A RESTful API for managing tasks (cards) and their notes. Built with a focus on 
 ---
 
 ## 🚀 Technologies Used
-- **Node.js**
-- **TypeScript**
-- **Express**
-- **Prisma ORM**
-- **SQLite (as the database)**
-- **Zod (for data validation)**
+- **Node.js: v22.13.1**
+- **TypeScript: ^5.8.3**
+- **Express: ^5.1.0**
+- **Prisma: ^6.6.0**
+- **SQLite: used via Prisma ORM**
+- **Zod: ^3.24.3**
 
 ---
-## 📂 Project Structure
-
 
 ## 🛠 Configuration and Installation
 
@@ -840,4 +838,15 @@ If the API receives a request to delete a note that does not exist in the databa
 ```
 ---
 
+
+### Generic Error
+If any other error occurs, the status code `500` will be returned with an object containing the property errors and the following validation message: Response Body
+
+ ```json
+{
+	"errors": [
+		"an internal server error occurred",
+	]
+}
+```
 
