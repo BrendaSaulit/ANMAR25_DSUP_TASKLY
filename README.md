@@ -775,6 +775,8 @@ In case of success, it returns the status code `200` and an object containing al
     ]
 }
 ```
+---
+
 ### 🔹 Delete a Task Card
 
 **Endpoint:**
