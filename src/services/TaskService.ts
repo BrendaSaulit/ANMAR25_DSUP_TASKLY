@@ -63,6 +63,12 @@ export class TaskService {
   }
 
   static async getByStatus(status: string, page: number, limit: number) {
+    const validStatuses = Object.values(Status);
+
+    if (!validStatuses.includes(status.toUpperCase() as Status)) {
+      throw new Error("Invalid status");
+    }
+
     const skip = (page - 1) * limit;
 
     const [tasks, count] = await Promise.all([
@@ -81,11 +87,12 @@ export class TaskService {
   }
 
   static async update(id: number, data: any) {
-    const updatedTask = await TaskRepository.update(id, data);
+    const task = await TaskRepository.findById(id)
 
-    if (!updatedTask) {
+    if (!task) {
       throw new Error("Task not found");
     }
+    const updatedTask = await TaskRepository.update(id, data);
 
     return {
       data: updatedTask,
@@ -93,6 +100,12 @@ export class TaskService {
   }
 
   static async getByCategory(category: string, page: number, limit: number) {
+    const validCategories = Object.values(Category);
+
+    if (!validCategories.includes(category.toUpperCase() as Category)) {
+      throw new Error("Invalid category");
+    }
+
     const skip = (page - 1) * limit;
 
     const [tasks, count] = await Promise.all([
@@ -109,4 +122,5 @@ export class TaskService {
       data: tasks,
     };
   }
+
 }

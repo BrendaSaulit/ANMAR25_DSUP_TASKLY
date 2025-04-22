@@ -100,12 +100,7 @@ export class TaskRepository {
   }
 
   static async findByStatus(status: string, skip: number, limit: number) {
-    const validStatuses: string[] = ["TODO", "IN_PROGRESS", "DONE"];
-
-    if (!validStatuses.includes(status.toUpperCase())) {
-      throw new Error("Invalid status");
-    }
-
+  
     return await prisma.task.findMany({
       where: {
         status: status.toUpperCase() as "TODO" | "IN_PROGRESS" | "DONE",
@@ -122,11 +117,6 @@ export class TaskRepository {
   }
 
   static async countByStatus(status: string) {
-    const validStatuses: string[] = ["TODO", "IN_PROGRESS", "DONE"];
-
-    if (!validStatuses.includes(status.toUpperCase())) {
-      throw new Error("Invalid status");
-    }
 
     return await prisma.task.count({
       where: {
@@ -143,11 +133,6 @@ export class TaskRepository {
   }
 
   static async findByCategory(category: string, skip: number, limit: number) {
-    const validCategories: string[] = ["WORK", "STUDY","PERSONAL","OTHER",];
-
-    if (!validCategories.includes(category.toUpperCase())) {
-      throw new Error("Invalid category");
-    }
 
     return await prisma.task.findMany({
       where: {
@@ -165,12 +150,7 @@ export class TaskRepository {
   }
 
   static async countByCategory(category: string) {
-    const validCategories: string[] =  ["WORK", "STUDY","PERSONAL","OTHER",];
-
-    if (!validCategories.includes(category.toUpperCase())) {
-      throw new Error("Invalid category");
-    }
-
+    
     return await prisma.task.count({
       where: {
         category: category.toUpperCase() as  "WORK" | "STUDY" | "PERSONAL" | "OTHER",
