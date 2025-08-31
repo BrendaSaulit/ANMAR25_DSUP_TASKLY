@@ -10,6 +10,11 @@ app.use(cors());
 
 app.use(express.json());
 
+// Hello World endpoint
+app.get("/", (req, res) => {
+  res.json({ message: "Hello World" });
+});
+
 app.use(taskRoutes);
 app.use(noteRoutes);
 
